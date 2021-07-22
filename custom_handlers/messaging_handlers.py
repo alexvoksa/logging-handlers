@@ -90,7 +90,6 @@ class DiscordMessaging(AbstractMessaging):
         Message that was sent to discord must have special formatting
         """
         data = {
-            "method": "POST",
             "url": self.webhook_url,
             "json": {
                 "username": self.sender_name,
@@ -124,23 +123,19 @@ class TelegramMessaging(AbstractMessaging):
         self.update_polls_command = self.root.format(method="getUpdates")
         self.parse_mode = parse_mode
         self.send_message_method = (
-            "sendMessage?chat_id={chat_id}&text={message_text}&parse_mode={parse_mode}"
+            "sendMessage?chat_id={chat_id}&parse_mode={parse_mode}"
         )
         self.send_message_command = self.root.format(method=self.send_message_method)
 
     async def send_message(
-        self,
-        session_kwargs: dict,
-        request_kwargs: dict,
-        text: str,
-        message_delay: int = 1,
+        self, session_kwargs: dict, request_kwargs: dict, text: str
     ) -> Response:
-        """Async message sending"""
+        """Async sending message"""
         url = self.send_message_command.format(
-            chat_id=self.channel_id, message_text=text, parse_mode=self.parse_mode
+            chat_id=self.channel_id, parse_mode=self.parse_mode
         )
-        request_kwargs.update({"url": url, "method": "GET"})
-
+        json_data = {"text": text}
+        request_kwargs.update({"url": url, "json": json_data})
         return await self.async_request(
             session_kwargs=session_kwargs, request_kwargs=request_kwargs
         )

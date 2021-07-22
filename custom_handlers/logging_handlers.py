@@ -49,7 +49,7 @@ class DiscordHandler(StreamHandler):
     def emit(self, record):
         """Logging handler built-in method, that was overridden
         to send messages"""
-        request_kwargs = {"method": "POST"}
+        request_kwargs = {"method": DiscordHandler.method}
         session_kwargs = {}
         if self.formatter:
             msg = self.formatter.format(record) + self.terminator
@@ -81,7 +81,7 @@ class TelegramHandler(StreamHandler):
     that supports sync and async sending data to
     telegram via telegram bot"""
 
-    method = "GET"
+    method = "POST"
 
     def __init__(
         self,
@@ -102,8 +102,8 @@ class TelegramHandler(StreamHandler):
     def emit(self, record):
         """Logging handler built-in method, that was overridden
         to send messages"""
-        request_kwargs = {"method": "GET"}
-        session_kwargs = {}
+        request_kwargs = {"method": TelegramHandler.method}
+        session_kwargs = dict()
 
         if self.formatter:
             msg = self.formatter.format(record) + self.terminator
