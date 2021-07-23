@@ -4,9 +4,9 @@
 > **Note!** These handlers are asynchronous, so the `order of the logs is not guaranteed!`
 >
 >
-> `pip install external-logging-handlers==0.1.0`
+> `pip install external-logging-handlers`
 >
-> [PyPi Link](https://pypi.org/project/external-logging-handlers/0.1.0/)
+> [PyPi Link](https://pypi.org/project/external-logging-handlers/)
 
 ## Usage:
 > Specify these environment variables: 
